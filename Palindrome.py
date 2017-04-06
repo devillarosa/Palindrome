@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import unittest
 import re
 
 #Assumption: Input will be a word, phrase, or other sequence of characters is a palindrome.
@@ -19,37 +20,30 @@ def isPalindrome(inputString):
 
     return True
 
-# Positive Test Cases
-positiveTestCases = ["mom", "racecar", "tacocat", "Hello, e olleh", "RIGHT!!! mom THGIR"]
-print ("Testing Positive Test Cases:")
-for testCase in positiveTestCases:
-    if isPalindrome(testCase):
-        print("PASS - Testcase:  %s" %(testCase))
-    else:
-        print("FAIL - Testcase:  %s" %(testCase))
+def palindromeDetection(fileLocation):
+    print ("Varifying palindromes in poem")
+    with open(fileLocation, 'r') as file:
+        for line in file:
+            cleanLine = line.strip()
+            if cleanLine and isPalindrome(cleanLine):
+                print("%s - is a Palindrome" %(cleanLine))
+            else:
+                print(cleanLine)
 
 
-print ("\n====================\n")
+class TestPalindrome(unittest.TestCase):
 
-# Negative Test Cases
-print ("Testing Negative Test Cases:")
-negativeTestCases = ["Devin", "Villarosa", "Hi, my name is Devin!"]
-for testCase in negativeTestCases:
-    if not isPalindrome(testCase):
-        print("PASS - Testcase:  %s" %(testCase))
-    else:
-        print("FAIL - Testcase:  %s" %(testCase))
+    def test_positiveCase(self):
+        positiveTestCases = ["mom", "racecar", "tacocat", "Hello, e olleh", "RIGHT!!! mom THGIR"]
+        for testCase in positiveTestCases:
+            self.assertTrue(isPalindrome(testCase))
+
+    def test_negativeCase(self):
+        negativeTestCases = ["Devin", "Villarosa", "Hi, my name is Devin!"]
+        for testCase in negativeTestCases:
+            self.assertFalse(isPalindrome(testCase))
 
 
-print ("\n====================\n")
+if __name__ == '__main__':
 
-#Test Poem Lines
-print ("Varifying palindromes in poem")
-with open("./poetry.txt", 'r') as file:
-    for line in file:
-        cleanLine = line.strip()
-        if cleanLine and isPalindrome(cleanLine):
-            print("%s - is a Palindrome" %(cleanLine))
-        else:
-            print(cleanLine)
-
+     unittest.main()
