@@ -2,8 +2,9 @@
 
 import unittest
 import re
+import os.path
 
-#Assumption: Input will be a word, phrase, or other sequence of characters is a palindrome.
+# Assumption: Input will be a word, phrase, or other sequence of characters is a palindrome.
 def isPalindrome(inputString):
 
     if not isinstance(inputString, basestring):
@@ -20,7 +21,11 @@ def isPalindrome(inputString):
     return True
 
 def palindromeDetection(fileLocation):
+    if not os.path.isfile(fileLocation):
+        raise Exception("Error: File Location does not exist")
+
     print ("Varifying palindromes in poem")
+
     with open(fileLocation, 'r') as file:
         for line in file:
             cleanLine = line.strip()
@@ -41,6 +46,10 @@ class TestPalindrome(unittest.TestCase):
         negativeTestCases = ["Devin", "Villarosa", "Hi, my name is Devin!"]
         for testCase in negativeTestCases:
             self.assertFalse(isPalindrome(testCase))
+
+    # This tests passes if a vaild file location exists and executes with no exception
+    def test_palindromeDetection(self):
+        palindromeDetection("./poetry.txt")
 
 
 if __name__ == '__main__':
