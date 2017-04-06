@@ -7,8 +7,7 @@ import re
 def isPalindrome(inputString):
 
     if not isinstance(inputString, basestring):
-        print ("Error: not of string type")
-        return False
+        raise Exception("Error: Not a string type")
 
     # Ignore punctuation and whitespace
     cleanString = re.sub(r'[^\w]', '', inputString)
