@@ -2,9 +2,6 @@
 
 import re
 
-# TODO: Improve to O(n/2) performance by comparing the first half to the second half of the string backwards.
-#   But for this exercise, I'll leave it to be more legible
-
 #Assumption: Input will be a word, phrase, or other sequence of characters is a palindrome.
 def isPalindrome(inputString):
 
@@ -12,13 +9,15 @@ def isPalindrome(inputString):
         print ("Error: not of string type")
         return False
 
-
-    # Ignore puncutation and whitespace
+    # Ignore punctuation and whitespace
     cleanString = re.sub(r'[^\w]', '', inputString)
 
-    # Ignore upper vs lowercase
-    return cleanString.upper() == cleanString[::-1].upper()
+    # Ignore upper vs lowercase by making all uppercase
+    for i in range(len(cleanString)//2):
+        if cleanString[i].upper() != cleanString[-1-i].upper():
+            return False
 
+    return True
 
 # Positive Test Cases
 positiveTestCases = ["mom", "racecar", "tacocat", "Hello, e olleh", "RIGHT!!! mom THGIR"]
@@ -44,7 +43,7 @@ for testCase in negativeTestCases:
 
 print ("\n====================\n")
 
-#Test Poetry Line
+#Test Poem Lines
 print ("Varifying palindromes in poem")
 with open("./poetry.txt", 'r') as file:
     for line in file:
